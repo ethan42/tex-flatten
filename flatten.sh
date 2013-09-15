@@ -4,7 +4,7 @@ tmp=/tmp/tex-flatten
 cp $1 $tmp
 
 while true; do
-    inputs=`grep -o '\\input{.*}' $tmp | cut -f 2 -d '{' | cut -f 1 -d '}'`
+    inputs=`grep -v '%' $tmp | grep -o '\\input{.*}' | cut -f 2 -d '{' | cut -f 1 -d '}'`
     if [ "$inputs" == "" ]; then
         cat $tmp
         exit 0
