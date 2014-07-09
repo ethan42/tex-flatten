@@ -6,8 +6,7 @@ cp $1 $tmp
 while true; do
     inputs=`grep -v '%' $tmp | grep -o '\\input{.*}' | cut -f 2 -d '{' | cut -f 1 -d '}'`
     if [ "$inputs" == "" ]; then
-        cat $tmp
-        exit 0
+        break
     fi
    echo $inputs
 
@@ -23,3 +22,9 @@ while true; do
     /bin/bash -x -c "sed -i $sedline $tmp" &> /dev/null
 done
 
+sed -i 's,\\begin{lstlisting},\\begin{verbatim},g' $tmp
+sed -i 's,\\end{lstlisting},\\end{verbatim},g' $tmp
+sed -i 's,\\uline,\\underline,g' $tmp
+sed -i 's,\\squish,,g' $tmp
+
+cat $tmp
